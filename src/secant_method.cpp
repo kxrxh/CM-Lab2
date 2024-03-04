@@ -17,6 +17,7 @@ double SecantMethod::solve() {
 
   fx0 = function(x0);
   fx1 = function(x1);
+  
   if (fx0 * fx1 >= 0) {
     return std::numeric_limits<double>::quiet_NaN();
   }

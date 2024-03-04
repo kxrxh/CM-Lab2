@@ -1,28 +1,28 @@
 /********************************************************************************
-** Form generated from reading UI file 'MainWindow - untitledZkKcRf.ui'
+** Form generated from reading UI file 'MainWindowheeHMM.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.15.12
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef MAINWINDOW_20__2D__20_UNTITLEDZKKCRF_H
-#define MAINWINDOW_20__2D__20_UNTITLEDZKKCRF_H
+#ifndef MAINWINDOWHEEHMM_H
+#define MAINWINDOWHEEHMM_H
 
+#include <QtCharts/QChartView>
+#include <QtCharts/chartsnamespace.h>
 #include <QtCore/QVariant>
 #include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QFrame>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
-#include <QtWidgets/QTableWidget>
 #include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QWidget>
@@ -51,12 +51,10 @@ public:
   QFrame *line;
   QTextEdit *textEdit;
   QWidget *syst;
-  QLabel *Functionlabel_8;
   QTextBrowser *text_output;
-  QPushButton *show_chart_button;
   QPushButton *clear_output;
   QLabel *Functionlabel_9;
-  QTableWidget *result_table;
+  QtCharts::QChartView *chartview;
   QMenuBar *menubar;
   QStatusBar *statusbar;
 
@@ -179,7 +177,7 @@ public:
     solve_button->setFont(font4);
     Functionlabel_7 = new QLabel(nonlin);
     Functionlabel_7->setObjectName(QString::fromUtf8("Functionlabel_7"));
-    Functionlabel_7->setGeometry(QRect(740, 30, 311, 41));
+    Functionlabel_7->setGeometry(QRect(730, 30, 311, 41));
     Functionlabel_7->setFont(font2);
     Functionlabel_7->setAlignment(Qt::AlignCenter);
     search_button = new QPushButton(nonlin);
@@ -193,7 +191,7 @@ public:
     search_button->setFlat(true);
     file_solve_button = new QPushButton(nonlin);
     file_solve_button->setObjectName(QString::fromUtf8("file_solve_button"));
-    file_solve_button->setGeometry(QRect(770, 130, 261, 61));
+    file_solve_button->setGeometry(QRect(740, 130, 291, 61));
     file_solve_button->setFont(font4);
     line = new QFrame(nonlin);
     line->setObjectName(QString::fromUtf8("line"));
@@ -216,19 +214,9 @@ public:
     icon3.addFile(QString::fromUtf8(":/assets/klim.jpg"), QSize(),
                   QIcon::Normal, QIcon::Off);
     tabWidget->addTab(syst, icon3, QString());
-    Functionlabel_8 = new QLabel(centralwidget);
-    Functionlabel_8->setObjectName(QString::fromUtf8("Functionlabel_8"));
-    Functionlabel_8->setGeometry(QRect(10, 340, 72, 36));
-    Functionlabel_8->setFont(font2);
-    Functionlabel_8->setAlignment(Qt::AlignLeading | Qt::AlignLeft |
-                                  Qt::AlignVCenter);
     text_output = new QTextBrowser(centralwidget);
     text_output->setObjectName(QString::fromUtf8("text_output"));
     text_output->setGeometry(QRect(10, 720, 1091, 241));
-    show_chart_button = new QPushButton(centralwidget);
-    show_chart_button->setObjectName(QString::fromUtf8("show_chart_button"));
-    show_chart_button->setGeometry(QRect(920, 670, 181, 41));
-    show_chart_button->setFont(font4);
     clear_output = new QPushButton(centralwidget);
     clear_output->setObjectName(QString::fromUtf8("clear_output"));
     clear_output->setGeometry(QRect(1040, 720, 61, 38));
@@ -240,10 +228,9 @@ public:
     Functionlabel_9->setFont(font2);
     Functionlabel_9->setAlignment(Qt::AlignLeading | Qt::AlignLeft |
                                   Qt::AlignVCenter);
-    result_table = new QTableWidget(centralwidget);
-    result_table->setObjectName(QString::fromUtf8("result_table"));
-    result_table->setGeometry(QRect(10, 380, 1091, 280));
-    result_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    chartview = new QtCharts::QChartView(centralwidget);
+    chartview->setObjectName(QString::fromUtf8("chartview"));
+    chartview->setGeometry(QRect(60, 330, 1001, 351));
     MainWindow->setCentralWidget(centralwidget);
     menubar = new QMenuBar(MainWindow);
     menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -252,6 +239,14 @@ public:
     statusbar = new QStatusBar(MainWindow);
     statusbar->setObjectName(QString::fromUtf8("statusbar"));
     MainWindow->setStatusBar(statusbar);
+#if QT_CONFIG(shortcut)
+    Functionlabel->setBuddy(func_cbox);
+    Functionlabel_2->setBuddy(method_cbox);
+    Functionlabel_3->setBuddy(left_border_spinbox);
+    Functionlabel_4->setBuddy(right_border_spinbox);
+    Functionlabel_5->setBuddy(inacc_spinbox);
+    Functionlabel_7->setBuddy(textEdit);
+#endif // QT_CONFIG(shortcut)
 
     retranslateUi(MainWindow);
 
@@ -268,20 +263,20 @@ public:
         "MainWindow", "Laboratory work #2", nullptr));
     func_cbox->setItemText(0, QCoreApplication::translate(
                                   "MainWindow",
-                                  "14.23x^3 + 8.1x^2\342\210\2221.01x+0.64=0",
+                                  "y = 14.23x^3 + 8.1x^2\342\210\2221.01x+0.64",
                                   nullptr));
     func_cbox->setItemText(1, QCoreApplication::translate("MainWindow",
-                                                          "x^3 + x^2 + 9.2 = 0",
+                                                          "y = x^3 + x^2 + 9.2",
                                                           nullptr));
     func_cbox->setItemText(2, QCoreApplication::translate("MainWindow",
-                                                          "exp(2.74x) - 54 = 0",
+                                                          "y = exp(2.74x) - 54",
                                                           nullptr));
-    func_cbox->setItemText(
-        3, QCoreApplication::translate("MainWindow", " 2*sin(x) + pi/2 = 0",
-                                       nullptr));
+    func_cbox->setItemText(3, QCoreApplication::translate("MainWindow",
+                                                          "y = 2*sin(x) + pi/2",
+                                                          nullptr));
 
     func_cbox->setCurrentText(QCoreApplication::translate(
-        "MainWindow", "14.23x^3 + 8.1x^2\342\210\2221.01x+0.64=0", nullptr));
+        "MainWindow", "y = 14.23x^3 + 8.1x^2\342\210\2221.01x+0.64", nullptr));
     Functionlabel->setText(
         QCoreApplication::translate("MainWindow", "Function", nullptr));
     method_cbox->setItemText(
@@ -318,10 +313,6 @@ public:
         tabWidget->indexOf(syst),
         QCoreApplication::translate(
             "MainWindow", "The system of nonlinear equations", nullptr));
-    Functionlabel_8->setText(
-        QCoreApplication::translate("MainWindow", "Table", nullptr));
-    show_chart_button->setText(QCoreApplication::translate(
-        "MainWindow", "Show on the chart", nullptr));
     clear_output->setText(
         QCoreApplication::translate("MainWindow", "Clear", nullptr));
     Functionlabel_9->setText(
@@ -335,4 +326,4 @@ class MainWindow : public Ui_MainWindow {};
 
 QT_END_NAMESPACE
 
-#endif // MAINWINDOW_20__2D__20_UNTITLEDZKKCRF_H
+#endif // MAINWINDOWHEEHMM_H

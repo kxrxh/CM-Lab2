@@ -17,17 +17,19 @@ public:
   ~MainWindow();
 
 private:
-  void updateTable(int mode);
   Ui::MainWindow *ui;
+  void zoom_slot();
+
+  void redraw_chart_ab(double a, double b);
 
 private slots:
   void clear_btn_clicked();
 
-  // void solve_btn_clicked();
+  void solve_btn_clicked();
 
   void browse_btn_clicked();
 
-  void method_changed();
+  void redraw_chart();
 
   // void show_chart_btn_clicked();
 

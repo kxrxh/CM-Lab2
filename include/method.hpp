@@ -1,8 +1,6 @@
 #ifndef METHOD_HPP
 #define METHOD_HPP
 
-#include <vector>
-
 /**
  * @brief Base class for numerical methods to find roots of a function within an
  * interval.
