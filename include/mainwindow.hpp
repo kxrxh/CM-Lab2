@@ -16,7 +16,6 @@
 
 QT_CHARTS_USE_NAMESPACE
 
-
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -36,19 +35,25 @@ private:
 
   bool validate_script(const Script &script) const;
 
-  void redraw_chart_ab(double a, double b);
+  void draw_chart_ab(double a, double b);
+  void draw_system_chart(double a, double b);
 
 private slots:
   void clear_btn_clicked();
 
   void solve_btn_clicked();
 
+  void solve_sys_btn_clicked();
+
   void browse_btn_clicked();
 
-  void redraw_chart();
+  void redraw_chart(int index);
+
+  void update_chart();
 
   void save_result_btn_clicked();
 
   void solve_script_btn_clicked();
+
 };
 #endif // MAINWINDOW_H

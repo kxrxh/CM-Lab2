@@ -1,13 +1,13 @@
 /********************************************************************************
-** Form generated from reading UI file 'MainWindowKDKRXL.ui'
+** Form generated from reading UI file 'MainWindowTrsgby.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.15.12
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef MAINWINDOWKDKRXL_H
-#define MAINWINDOWKDKRXL_H
+#ifndef MAINWINDOWTRSGBY_H
+#define MAINWINDOWTRSGBY_H
 
 #include <QtCharts/QChartView>
 #include <QtCharts/chartsnamespace.h>
@@ -21,6 +21,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QRadioButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTextBrowser>
@@ -51,6 +52,23 @@ public:
   QFrame *line;
   QTextEdit *textEdit;
   QWidget *syst;
+  QLabel *Functionlabel_8;
+  QRadioButton *syst1_rb;
+  QRadioButton *syst2_rb;
+  QTextBrowser *text_eq1;
+  QTextBrowser *text_eq2;
+  QTextEdit *textEdit_sys;
+  QLabel *Functionlabel_16;
+  QLabel *Functionlabel_17;
+  QDoubleSpinBox *left_border_spinbox_sys;
+  QLabel *Functionlabel_18;
+  QPushButton *solve_button_3;
+  QDoubleSpinBox *right_border_spinbox_sys;
+  QPushButton *search_button_sys;
+  QPushButton *file_solve_button_sys;
+  QLabel *Functionlabel_19;
+  QDoubleSpinBox *inacc_spinbox_sys;
+  QFrame *line_3;
   QTextBrowser *text_output;
   QPushButton *clear_output;
   QLabel *Functionlabel_9;
@@ -211,6 +229,104 @@ public:
     tabWidget->addTab(nonlin, icon2, QString());
     syst = new QWidget();
     syst->setObjectName(QString::fromUtf8("syst"));
+    Functionlabel_8 = new QLabel(syst);
+    Functionlabel_8->setObjectName(QString::fromUtf8("Functionlabel_8"));
+    Functionlabel_8->setGeometry(QRect(70, 20, 311, 41));
+    Functionlabel_8->setFont(font2);
+    Functionlabel_8->setAlignment(Qt::AlignCenter);
+    syst1_rb = new QRadioButton(syst);
+    syst1_rb->setObjectName(QString::fromUtf8("syst1_rb"));
+    syst1_rb->setGeometry(QRect(40, 91, 21, 31));
+    syst1_rb->setChecked(true);
+    syst2_rb = new QRadioButton(syst);
+    syst2_rb->setObjectName(QString::fromUtf8("syst2_rb"));
+    syst2_rb->setGeometry(QRect(40, 170, 21, 31));
+    text_eq1 = new QTextBrowser(syst);
+    text_eq1->setObjectName(QString::fromUtf8("text_eq1"));
+    text_eq1->setGeometry(QRect(70, 70, 161, 71));
+    text_eq1->setFont(font1);
+    text_eq1->setAutoFillBackground(true);
+    text_eq1->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    text_eq1->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    text_eq2 = new QTextBrowser(syst);
+    text_eq2->setObjectName(QString::fromUtf8("text_eq2"));
+    text_eq2->setGeometry(QRect(70, 150, 161, 71));
+    text_eq2->setFont(font1);
+    text_eq2->setAutoFillBackground(true);
+    text_eq2->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    text_eq2->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    textEdit_sys = new QTextEdit(syst);
+    textEdit_sys->setObjectName(QString::fromUtf8("textEdit_sys"));
+    textEdit_sys->setGeometry(QRect(780, 110, 221, 41));
+    textEdit_sys->setFont(font5);
+    Functionlabel_16 = new QLabel(syst);
+    Functionlabel_16->setObjectName(QString::fromUtf8("Functionlabel_16"));
+    Functionlabel_16->setGeometry(QRect(390, 70, 141, 29));
+    Functionlabel_16->setFont(font3);
+    Functionlabel_16->setAlignment(Qt::AlignLeading | Qt::AlignLeft |
+                                   Qt::AlignVCenter);
+    Functionlabel_17 = new QLabel(syst);
+    Functionlabel_17->setObjectName(QString::fromUtf8("Functionlabel_17"));
+    Functionlabel_17->setGeometry(QRect(240, 150, 141, 31));
+    Functionlabel_17->setFont(font3);
+    Functionlabel_17->setAlignment(Qt::AlignLeading | Qt::AlignLeft |
+                                   Qt::AlignVCenter);
+    left_border_spinbox_sys = new QDoubleSpinBox(syst);
+    left_border_spinbox_sys->setObjectName(
+        QString::fromUtf8("left_border_spinbox_sys"));
+    left_border_spinbox_sys->setGeometry(QRect(240, 110, 131, 31));
+    left_border_spinbox_sys->setDecimals(4);
+    left_border_spinbox_sys->setMinimum(-100000000000000.000000000000000);
+    left_border_spinbox_sys->setMaximum(1000000000000000.000000000000000);
+    left_border_spinbox_sys->setSingleStep(0.100000000000000);
+    Functionlabel_18 = new QLabel(syst);
+    Functionlabel_18->setObjectName(QString::fromUtf8("Functionlabel_18"));
+    Functionlabel_18->setGeometry(QRect(740, 60, 311, 41));
+    Functionlabel_18->setFont(font2);
+    Functionlabel_18->setAlignment(Qt::AlignCenter);
+    solve_button_3 = new QPushButton(syst);
+    solve_button_3->setObjectName(QString::fromUtf8("solve_button_3"));
+    solve_button_3->setGeometry(QRect(390, 160, 121, 71));
+    solve_button_3->setFont(font4);
+    right_border_spinbox_sys = new QDoubleSpinBox(syst);
+    right_border_spinbox_sys->setObjectName(
+        QString::fromUtf8("right_border_spinbox_sys"));
+    right_border_spinbox_sys->setGeometry(QRect(240, 190, 131, 31));
+    right_border_spinbox_sys->setDecimals(4);
+    right_border_spinbox_sys->setMinimum(-100000000000000.000000000000000);
+    right_border_spinbox_sys->setMaximum(100000000000000.000000000000000);
+    right_border_spinbox_sys->setSingleStep(0.100000000000000);
+    search_button_sys = new QPushButton(syst);
+    search_button_sys->setObjectName(QString::fromUtf8("search_button_sys"));
+    search_button_sys->setGeometry(QRect(1000, 110, 41, 41));
+    search_button_sys->setIcon(icon1);
+    search_button_sys->setIconSize(QSize(24, 24));
+    search_button_sys->setFlat(true);
+    file_solve_button_sys = new QPushButton(syst);
+    file_solve_button_sys->setObjectName(
+        QString::fromUtf8("file_solve_button_sys"));
+    file_solve_button_sys->setGeometry(QRect(750, 160, 291, 61));
+    file_solve_button_sys->setFont(font4);
+    Functionlabel_19 = new QLabel(syst);
+    Functionlabel_19->setObjectName(QString::fromUtf8("Functionlabel_19"));
+    Functionlabel_19->setGeometry(QRect(240, 70, 131, 31));
+    Functionlabel_19->setFont(font3);
+    Functionlabel_19->setAlignment(Qt::AlignLeading | Qt::AlignLeft |
+                                   Qt::AlignVCenter);
+    inacc_spinbox_sys = new QDoubleSpinBox(syst);
+    inacc_spinbox_sys->setObjectName(QString::fromUtf8("inacc_spinbox_sys"));
+    inacc_spinbox_sys->setGeometry(QRect(390, 110, 131, 31));
+    inacc_spinbox_sys->setAccelerated(false);
+    inacc_spinbox_sys->setDecimals(7);
+    inacc_spinbox_sys->setMinimum(0.000000000000000);
+    inacc_spinbox_sys->setMaximum(1.000000000000000);
+    inacc_spinbox_sys->setSingleStep(0.000001000000000);
+    inacc_spinbox_sys->setValue(0.000001000000000);
+    line_3 = new QFrame(syst);
+    line_3->setObjectName(QString::fromUtf8("line_3"));
+    line_3->setGeometry(QRect(660, 0, 20, 291));
+    line_3->setFrameShape(QFrame::VLine);
+    line_3->setFrameShadow(QFrame::Sunken);
     QIcon icon3;
     icon3.addFile(QString::fromUtf8(":/assets/klim.jpg"), QSize(),
                   QIcon::Normal, QIcon::Off);
@@ -251,6 +367,11 @@ public:
     Functionlabel_4->setBuddy(right_border_spinbox);
     Functionlabel_5->setBuddy(inacc_spinbox);
     Functionlabel_7->setBuddy(textEdit);
+    Functionlabel_8->setBuddy(func_cbox);
+    Functionlabel_16->setBuddy(inacc_spinbox);
+    Functionlabel_17->setBuddy(right_border_spinbox);
+    Functionlabel_18->setBuddy(textEdit);
+    Functionlabel_19->setBuddy(left_border_spinbox);
 #endif // QT_CONFIG(shortcut)
 
     retranslateUi(MainWindow);
@@ -312,6 +433,66 @@ public:
     tabWidget->setTabText(tabWidget->indexOf(nonlin),
                           QCoreApplication::translate(
                               "MainWindow", "The nonlinear equation", nullptr));
+    Functionlabel_8->setText(QCoreApplication::translate(
+        "MainWindow", "System of equations", nullptr));
+    syst1_rb->setText(QString());
+    syst2_rb->setText(QString());
+    text_eq1->setHtml(QCoreApplication::translate(
+        "MainWindow",
+        "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" "
+        "\"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        "<html><head><meta name=\"qrichtext\" content=\"1\" /><style "
+        "type=\"text/css\">\n"
+        "p, li { white-space: pre-wrap; }\n"
+        "</style></head><body style=\" font-family:'Noto Sans'; "
+        "font-size:12pt; font-weight:400; font-style:normal;\">\n"
+        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+        "margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span "
+        "style=\" font-size:14pt; font-style:italic;\">tg(2x + 0.2y) = "
+        "x</span><span style=\" font-size:14pt; font-style:italic; "
+        "vertical-align:super;\">2</span></p>\n"
+        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+        "margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span "
+        "style=\" font-size:14pt; font-style:italic;\">4x</span><span style=\" "
+        "font-size:14pt; font-style:italic; "
+        "vertical-align:super;\">2</span><span style=\" font-size:14pt; "
+        "font-style:italic;\"> + 4y</span><span style=\" font-size:14pt; "
+        "font-style:italic; vertical-align:super;\""
+        ">2</span><span style=\" font-size:14pt; "
+        "font-style:italic;\">=1</span></p></body></html>",
+        nullptr));
+    text_eq2->setHtml(QCoreApplication::translate(
+        "MainWindow",
+        "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" "
+        "\"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        "<html><head><meta name=\"qrichtext\" content=\"1\" /><style "
+        "type=\"text/css\">\n"
+        "p, li { white-space: pre-wrap; }\n"
+        "</style></head><body style=\" font-family:'Noto Sans'; "
+        "font-size:12pt; font-weight:400; font-style:normal;\">\n"
+        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+        "margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span "
+        "style=\" font-size:14pt; font-style:italic;\">sin(x) = 3y</span></p>\n"
+        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+        "margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span "
+        "style=\" font-size:14pt; font-style:italic;\">xy + 2x</span><span "
+        "style=\" font-size:14pt; font-style:italic; "
+        "vertical-align:super;\">2</span><span style=\" font-size:14pt; "
+        "font-style:italic;\">=16</span></p></body></html>",
+        nullptr));
+    Functionlabel_16->setText(
+        QCoreApplication::translate("MainWindow", "Inaccuracy", nullptr));
+    Functionlabel_17->setText(
+        QCoreApplication::translate("MainWindow", "Right border", nullptr));
+    Functionlabel_18->setText(QCoreApplication::translate(
+        "MainWindow", "Load preset from file", nullptr));
+    solve_button_3->setText(
+        QCoreApplication::translate("MainWindow", "Solve", nullptr));
+    search_button_sys->setText(QString());
+    file_solve_button_sys->setText(QCoreApplication::translate(
+        "MainWindow", "Solve using file data", nullptr));
+    Functionlabel_19->setText(
+        QCoreApplication::translate("MainWindow", "Left border", nullptr));
     tabWidget->setTabText(
         tabWidget->indexOf(syst),
         QCoreApplication::translate(
@@ -331,4 +512,4 @@ class MainWindow : public Ui_MainWindow {};
 
 QT_END_NAMESPACE
 
-#endif // MAINWINDOWKDKRXL_H
+#endif // MAINWINDOWTRSGBY_H
