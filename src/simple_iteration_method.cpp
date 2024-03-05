@@ -1,19 +1,20 @@
 #include "simple_iteration_method.hpp"
+#include "utils.hpp"
 
 double SimpleIterationMethod::solve() {
-  double x0 = a;
-  double x1, error;
 
-  for (it = 0; it < max_it; ++it) {
-    x1 = function(x0);            // f(x) = x
-    error = fabs((x1 - x0) / x1); // Relative error
-
-    if (error < tolerance) {
-      return x1;
-    }
-
-    x0 = x1;
+  if (function(a) * function(b) >= 0) {
+    return NAN;
   }
 
-  return std::numeric_limits<double>::quiet_NaN();
+  double x0 = (a + b) / 2;
+  double x1 = x0 - function(x0) / Math::derivative(function, x0);
+
+  while (std::abs(x1 - x0) > tolerance && it < max_it) {
+    x0 = x1;
+    x1 = x0 - function(x0) / Math::derivative(function, x0);
+    it++;
+  }
+
+  return x1;
 }

@@ -11,7 +11,7 @@ static double first(double x) {
 
 static double second(double x) { return std::pow(x, 3) + std::pow(x, 2) + 9.2; }
 
-static double third(double x) { return std::exp(2.74 * x) - 54; }
+static double third(double x) { return std::exp(0.24 * x) - 2; }
 
 static double fourth(double x) { return 2 * std::sin(x) + pi / 2; }
 

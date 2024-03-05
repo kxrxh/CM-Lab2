@@ -44,6 +44,9 @@ double second_derivative(double (*f)(double), double x, double h = 1e-5);
  */
 double partial_derivative(double (*f)(double), double x, double h = 1e-5,
                           bool wrt_x = true);
+
+
+bool is_monotonic(double (*f)(double), double left, double right);
 } // namespace Math
 
 #endif /* MATH_HPP */

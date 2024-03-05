@@ -2,6 +2,20 @@
 #define MAINWINDOW_H
 
 #include "QMainWindow"
+#include "script.hpp"
+#include "ui_MainWindow.hpp"
+#include <QDateTime>
+#include <QDebug>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QToolTip>
+#include <QValueAxis>
+#include <QtCharts/QChart>
+#include <QtCharts/QChartView>
+#include <QtCharts/QLineSeries>
+
+QT_CHARTS_USE_NAMESPACE
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -18,7 +32,9 @@ public:
 
 private:
   Ui::MainWindow *ui;
-  void zoom_slot();
+  // void zoom_slot();
+
+  bool validate_script(const Script &script) const;
 
   void redraw_chart_ab(double a, double b);
 
@@ -31,8 +47,8 @@ private slots:
 
   void redraw_chart();
 
-  // void show_chart_btn_clicked();
+  void save_result_btn_clicked();
 
-  // void save_result_btn_clicked();
+  void solve_script_btn_clicked();
 };
 #endif // MAINWINDOW_H

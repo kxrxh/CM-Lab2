@@ -2,25 +2,27 @@
 
 double HalfDivMehod::solve() {
   if (function(a) * function(b) > 0) {
-    return std::numeric_limits<double>::quiet_NaN();
+    return NAN;
   }
 
-  double c, fc;
+  double x, fx;
   for (int i = 0; i < max_it; ++i) {
-    c = (a + b) / 2;
-    fc = function(c);
+    x = (a + b) / 2;
+    fx = function(x);
 
-    if (std::abs(fc) < tolerance) {
-      it = i;
-      return c;
+    if (function(a) * fx > 0) {
+      a = x;
+    } else {
+      b = x;
     }
 
-    if (function(a) * fc < 0) {
-      b = c;
-    } else {
-      a = c;
+    it++;
+
+    if (fabs(a - b) <= tolerance || fabs(fx) < tolerance) {
+      x = (a + b) / 2;
+      return x;
     }
   }
 
-  return std::numeric_limits<double>::quiet_NaN();
+  return NAN;
 }

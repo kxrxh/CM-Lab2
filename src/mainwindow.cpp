@@ -4,16 +4,6 @@
 #include "method.hpp"
 #include "secant_method.hpp"
 #include "simple_iteration_method.hpp"
-#include "ui_MainWindow.hpp"
-#include <QDebug>
-#include <QFileDialog>
-#include <QToolTip>
-#include <QValueAxis>
-#include <QtCharts/QChart>
-#include <QtCharts/QChartView>
-#include <QtCharts/QLineSeries>
-
-QT_CHARTS_USE_NAMESPACE
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -21,8 +11,10 @@ MainWindow::MainWindow(QWidget *parent)
 
   // Create a chart view
   ui->chartview->setRenderHint(QPainter::Antialiasing);
-  ui->chartview->setRubberBand(QChartView::RectangleRubberBand);
+  ui->chartview->setRubberBand(QChartView::HorizontalRubberBand);
   ui->chartview->setToolTip("Right click to zoom in, left click to zoom out");
+
+  ui->text_output->acceptRichText();
 
   redraw_chart();
 
@@ -34,6 +26,11 @@ MainWindow::MainWindow(QWidget *parent)
           &MainWindow::redraw_chart);
   connect(ui->solve_button, &QPushButton::clicked, this,
           &MainWindow::solve_btn_clicked);
+
+  connect(ui->save_btn, &QPushButton::clicked, this,
+          &MainWindow::save_result_btn_clicked);
+  connect(ui->file_solve_button, &QPushButton::clicked, this,
+          &MainWindow::solve_script_btn_clicked);
 }
 
 MainWindow::~MainWindow() {}
@@ -41,35 +38,33 @@ MainWindow::~MainWindow() {}
 void MainWindow::clear_btn_clicked() { ui->text_output->clear(); }
 
 void MainWindow::browse_btn_clicked() {
-  QString file = QFileDialog::getOpenFileName(
-      this, tr("Choose a file"), QDir::currentPath(), "Text files (*.txt)");
-  if (!file.isEmpty()) {
+  QString filename = QFileDialog::getOpenFileName(
+      nullptr, "Open File", QDir::currentPath(), "Script file (*)");
+  if (filename.isEmpty()) {
     qDebug() << "No file was selected";
     return;
   }
 
-  // TODO: Read file data
-  ui->textEdit->setText(file);
+  ui->textEdit->setText(filename);
 }
+// void MainWindow::zoom_slot() {
+// QValueAxis *xAxis = qobject_cast<QValueAxis *>(
+//     ui->chartview->chart()->axes(Qt::Horizontal).first());
 
-void MainWindow::zoom_slot() {
-  QValueAxis *xAxis = qobject_cast<QValueAxis *>(
-      ui->chartview->chart()->axes(Qt::Horizontal).first());
+// // Check if the X-axis is successfully obtained
+// if (xAxis) {
+//   // Get the current range of the X-axis
+//   qreal minX = xAxis->min();
+//   qreal maxX = xAxis->max();
 
-  // Check if the X-axis is successfully obtained
-  if (xAxis) {
-    // Get the current range of the X-axis
-    qreal minX = xAxis->min();
-    qreal maxX = xAxis->max();
-
-    redraw_chart_ab(minX, maxX);
-  } else {
-    qDebug() << "Failed to get X-axis";
-  }
-}
+//   // redraw_chart_ab(minX, maxX);
+// } else {
+//   qDebug() << "Failed to get X-axis";
+// }
+//}
 
 void MainWindow::redraw_chart_ab(double a, double b) {
-  double step = fabs((b - a) / 100);
+  const double step = 0.1;
   QLineSeries *series = new QLineSeries();
   switch (ui->func_cbox->currentIndex()) {
   case 0: {
@@ -83,7 +78,10 @@ void MainWindow::redraw_chart_ab(double a, double b) {
     }
   } break;
   case 2: {
-    for (double x = a; x <= b; x += step) {
+    for (double x = -40; x <= 60; x += step) {
+      double fx = third(x);
+      if (fx == INFINITY)
+        continue;
       series->append(x, third(x));
     }
   } break;
@@ -95,16 +93,15 @@ void MainWindow::redraw_chart_ab(double a, double b) {
   }
   QChart *chart = new QChart();
   chart->addSeries(series);
-
-  chart->createDefaultAxes(); // Add default axes
+  chart->createDefaultAxes();
   chart->legend()->hide();
   chart->setTitle(ui->func_cbox->currentText());
   ui->chartview->setChart(chart);
-  connect(qobject_cast<QValueAxis *>(chart->axes(Qt::Horizontal).first()),
-          &QValueAxis::rangeChanged, this, &MainWindow::zoom_slot);
+  // connect(qobject_cast<QValueAxis *>(chart->axes(Qt::Horizontal).first()),
+  //         &QValueAxis::rangeChanged, this, &MainWindow::zoom_slot);
 }
 
-void MainWindow::redraw_chart() { redraw_chart_ab(-10, 10); }
+void MainWindow::redraw_chart() { redraw_chart_ab(-500, 500); }
 
 void MainWindow::solve_btn_clicked() {
   double a, b, tolerance;
@@ -121,13 +118,13 @@ void MainWindow::solve_btn_clicked() {
     return;
   }
 
-  int func = ui->func_cbox->currentIndex();
-  int method = ui->method_cbox->currentIndex();
+  int func_indx = ui->func_cbox->currentIndex();
+  int method_indx = ui->method_cbox->currentIndex();
 
   double (*f)(double);
   Method *methodInstance = nullptr;
 
-  switch (func) {
+  switch (func_indx) {
   case 0: {
     f = first;
   } break;
@@ -142,7 +139,7 @@ void MainWindow::solve_btn_clicked() {
   } break;
   }
 
-  switch (method) {
+  switch (method_indx) {
   case 0:
     methodInstance = new HalfDivMehod(f, a, b, tolerance);
     break;
@@ -156,7 +153,73 @@ void MainWindow::solve_btn_clicked() {
 
   if (methodInstance != nullptr) {
     auto x = methodInstance->solve();
-    qDebug() << x;
+    auto it = methodInstance->get_it();
+    auto current_time = QDateTime::currentDateTime();
+    ui->text_output->append("<b>Time:</b> " + current_time.toString());
+    ui->text_output->append("<b>Function:</b> " + ui->func_cbox->currentText());
+    ui->text_output->append("<b>Method:</b> " + ui->method_cbox->currentText());
+    ui->text_output->append("<b>Left border:</b> " + QString::number(a));
+    ui->text_output->append("<b>Right border:</b> " + QString::number(b));
+    ui->text_output->append("<b>Tolerance:</b> " + QString::number(tolerance));
+    ui->text_output->append("<b>Iterations:</b> " + QString::number(it));
+    ui->text_output->append("<b>Root:</b> " + QString::number(x));
+    ui->text_output->append("<b>F(x):</b> " + QString::number(f(x)));
+    ui->text_output->append(""); // Add a line break
     delete methodInstance;
   }
+}
+
+void MainWindow::save_result_btn_clicked() {
+  QString filename =
+      QFileDialog::getSaveFileName(this, tr("Save File"), "", "*.txt");
+  if (filename.isEmpty()) {
+    return;
+  }
+  QFile file(filename);
+
+  if (!file.open(QIODevice::WriteOnly)) {
+    QMessageBox::information(this, tr("Unable to open file"),
+                             file.errorString());
+    return;
+  }
+
+  QTextStream out(&file);
+
+  out << ui->text_output->toPlainText();
+}
+
+bool MainWindow::validate_script(const Script &script) const {
+  if (script.get_function_indx() < 0 ||
+      script.get_function_indx() > ui->func_cbox->count() - 1) {
+    return false;
+  }
+
+  if (script.get_method_indx() < 0 ||
+      script.get_method_indx() > ui->method_cbox->count() - 1) {
+    return false;
+  }
+
+  if (script.get_tol() < 0) {
+    return false;
+  }
+
+  return true;
+}
+
+void MainWindow::solve_script_btn_clicked() {
+  Script script(ui->textEdit->toPlainText());
+  if (!this->validate_script(script)) {
+    QMessageBox::warning(this, "Invalid script",
+                         "Please, provide valid script file.\nDouble check your "
+                         "indexes and try again.");
+    return;
+  }
+
+  ui->func_cbox->setCurrentIndex(script.get_function_indx());
+  ui->method_cbox->setCurrentIndex(script.get_method_indx());
+  ui->left_border_spinbox->setValue(script.get_left_border());
+  ui->right_border_spinbox->setValue(script.get_right_border());
+  ui->inacc_spinbox->setValue(script.get_tol());
+
+  this->solve_btn_clicked();
 }

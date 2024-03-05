@@ -15,10 +15,12 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Charts Core)
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(SOURCE_HEADER_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 file(GLOB PROJECT_SOURCES ${SOURCE_DIR}/*.cpp ${SOURCE_HEADER_DIR}/*.hpp)
+file(COPY assets resources.rcc DESTINATION ${CMAKE_BINARY_DIR})
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(lab2_cpp
         MANUAL_FINALIZATION
+        resources.rcc
         ${PROJECT_SOURCES}
     )
 else()  

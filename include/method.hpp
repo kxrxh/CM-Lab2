@@ -26,7 +26,7 @@ public:
    * @param max_it Maximum number of iterations allowed. Default value is 1000.
    */
   explicit Method(double (*f)(double), double a, double b, double tolerance,
-                  unsigned int max_it = 1000)
+                  unsigned int max_it = 10000)
       : function(f), a(a), b(b), tolerance(tolerance), max_it(max_it), it(0) {}
 
   /**
@@ -41,6 +41,8 @@ public:
    * @return Approximate value of the root found by the numerical method.
    */
   virtual double solve() = 0;
+
+  unsigned int get_it() const { return it; }
 };
 
 #endif /* METHOD_HPP */

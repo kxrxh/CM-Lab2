@@ -1,13 +1,13 @@
 /********************************************************************************
-** Form generated from reading UI file 'MainWindowheeHMM.ui'
+** Form generated from reading UI file 'MainWindowKDKRXL.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.15.12
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef MAINWINDOWHEEHMM_H
-#define MAINWINDOWHEEHMM_H
+#ifndef MAINWINDOWKDKRXL_H
+#define MAINWINDOWKDKRXL_H
 
 #include <QtCharts/QChartView>
 #include <QtCharts/chartsnamespace.h>
@@ -55,6 +55,7 @@ public:
   QPushButton *clear_output;
   QLabel *Functionlabel_9;
   QtCharts::QChartView *chartview;
+  QPushButton *save_btn;
   QMenuBar *menubar;
   QStatusBar *statusbar;
 
@@ -231,6 +232,10 @@ public:
     chartview = new QtCharts::QChartView(centralwidget);
     chartview->setObjectName(QString::fromUtf8("chartview"));
     chartview->setGeometry(QRect(60, 330, 1001, 351));
+    save_btn = new QPushButton(centralwidget);
+    save_btn->setObjectName(QString::fromUtf8("save_btn"));
+    save_btn->setGeometry(QRect(1000, 930, 101, 31));
+    save_btn->setFont(font4);
     MainWindow->setCentralWidget(centralwidget);
     menubar = new QMenuBar(MainWindow);
     menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -261,22 +266,20 @@ public:
   void retranslateUi(QMainWindow *MainWindow) {
     MainWindow->setWindowTitle(QCoreApplication::translate(
         "MainWindow", "Laboratory work #2", nullptr));
-    func_cbox->setItemText(0, QCoreApplication::translate(
-                                  "MainWindow",
-                                  "y = 14.23x^3 + 8.1x^2\342\210\2221.01x+0.64",
-                                  nullptr));
+    func_cbox->setItemText(
+        0, QCoreApplication::translate(
+               "MainWindow", "y = 14.23x^3 + 8.1x^2 - 1.01x +0.64", nullptr));
     func_cbox->setItemText(1, QCoreApplication::translate("MainWindow",
                                                           "y = x^3 + x^2 + 9.2",
                                                           nullptr));
-    func_cbox->setItemText(2, QCoreApplication::translate("MainWindow",
-                                                          "y = exp(2.74x) - 54",
-                                                          nullptr));
+    func_cbox->setItemText(2, QCoreApplication::translate(
+                                  "MainWindow", "y = exp(0.24x) - 2", nullptr));
     func_cbox->setItemText(3, QCoreApplication::translate("MainWindow",
                                                           "y = 2*sin(x) + pi/2",
                                                           nullptr));
 
     func_cbox->setCurrentText(QCoreApplication::translate(
-        "MainWindow", "y = 14.23x^3 + 8.1x^2\342\210\2221.01x+0.64", nullptr));
+        "MainWindow", "y = 14.23x^3 + 8.1x^2 - 1.01x +0.64", nullptr));
     Functionlabel->setText(
         QCoreApplication::translate("MainWindow", "Function", nullptr));
     method_cbox->setItemText(
@@ -317,6 +320,8 @@ public:
         QCoreApplication::translate("MainWindow", "Clear", nullptr));
     Functionlabel_9->setText(
         QCoreApplication::translate("MainWindow", "Output", nullptr));
+    save_btn->setText(
+        QCoreApplication::translate("MainWindow", "Save result", nullptr));
   } // retranslateUi
 };
 
@@ -326,4 +331,4 @@ class MainWindow : public Ui_MainWindow {};
 
 QT_END_NAMESPACE
 
-#endif // MAINWINDOWHEEHMM_H
+#endif // MAINWINDOWKDKRXL_H

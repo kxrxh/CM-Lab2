@@ -7,3 +7,7 @@ double Math::derivative(double (*f)(double), double x, double h) {
 double Math::second_derivative(double (*f)(double), double x, double h) {
   return (f(x - h) - 2 * f(x) + f(x + h)) / (h * h);
 }
+
+bool Math::is_monotonic(double (*f)(double), double left, double right) {
+
+}
