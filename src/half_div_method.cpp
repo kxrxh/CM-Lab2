@@ -1,11 +1,12 @@
 #include "half_div_method.hpp"
 
-double HalfDivMehod::solve() {
+double HalfDivMethod::solve() {
   if (function(a) * function(b) > 0) {
     return NAN;
   }
 
-  double x, fx;
+  double x;
+  double fx;
   for (int i = 0; i < max_it; ++i) {
     x = (a + b) / 2;
     fx = function(x);

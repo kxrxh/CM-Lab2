@@ -4,9 +4,9 @@
 #include "method.hpp"
 #include <cmath>
 
-class HalfDivMehod : public Method {
+class HalfDivMethod : public Method {
 public:
-  HalfDivMehod(double (*f)(double), double a, double b, double tol)
+  HalfDivMethod(double (*f)(double), double a, double b, double tol)
       : Method(f, a, b, tol) {}
   double solve() override;
 };

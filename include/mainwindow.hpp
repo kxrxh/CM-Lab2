@@ -27,10 +27,10 @@ class MainWindow : public QMainWindow {
 
 public:
   MainWindow(QWidget *parent = nullptr);
-  ~MainWindow();
+  ~MainWindow() = default;
 
 private:
-  Ui::MainWindow *ui;
+  std::unique_ptr<Ui::MainWindow> ui = std::make_unique<Ui::MainWindow>();
   // void zoom_slot();
 
   bool validate_script(const Script &script) const;
@@ -54,6 +54,5 @@ private slots:
   void save_result_btn_clicked();
 
   void solve_script_btn_clicked();
-
 };
 #endif // MAINWINDOW_H

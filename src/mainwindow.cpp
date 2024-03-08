@@ -6,10 +6,10 @@
 #include "secant_method.hpp"
 #include "simple_iteration_method.hpp"
 #include "systems.hpp"
+#include <memory>
 #include <qlineseries.h>
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow) {
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
   ui->setupUi(this);
 
   // Create a chart view
@@ -41,8 +41,6 @@ MainWindow::MainWindow(QWidget *parent)
           SLOT(redraw_chart(int)));
 }
 
-MainWindow::~MainWindow() {}
-
 void MainWindow::clear_btn_clicked() { ui->text_output->clear(); }
 
 void MainWindow::browse_btn_clicked() {
@@ -56,25 +54,9 @@ void MainWindow::browse_btn_clicked() {
   ui->textEdit->setText(filename);
 }
 
-// void MainWindow::zoom_slot() {
-// QValueAxis *xAxis = qobject_cast<QValueAxis *>(
-//     ui->chartview->chart()->axes(Qt::Horizontal).first());
-
-// // Check if the X-axis is successfully obtained
-// if (xAxis) {
-//   // Get the current range of the X-axis
-//   qreal minX = xAxis->min();
-//   qreal maxX = xAxis->max();
-
-//   // redraw_chart_ab(minX, maxX);
-// } else {
-//   qDebug() << "Failed to get X-axis";
-// }
-//}
-
 void MainWindow::draw_chart_ab(double a, double b) {
   const double step = 0.1;
-  QLineSeries *series = new QLineSeries();
+  auto series = new QLineSeries();
   switch (ui->func_cbox->currentIndex()) {
   case 0: {
     for (double x = a; x <= b; x += step) {
@@ -88,8 +70,7 @@ void MainWindow::draw_chart_ab(double a, double b) {
   } break;
   case 2: {
     for (double x = -40; x <= 60; x += step) {
-      double fx = third(x);
-      if (fx == INFINITY)
+      if (double fx = third(x); fx == INFINITY)
         continue;
       series->append(x, third(x));
     }
@@ -99,41 +80,41 @@ void MainWindow::draw_chart_ab(double a, double b) {
       series->append(x, fourth(x));
     }
   } break;
+  default:
+    delete series;
+    return;
   }
-  QChart *chart = new QChart();
+  auto chart = new QChart();
   chart->addSeries(series);
   chart->createDefaultAxes();
   chart->legend()->hide();
   chart->setTitle(ui->func_cbox->currentText());
   ui->chartview->setChart(chart);
-  // connect(qobject_cast<QValueAxis *>(chart->axes(Qt::Horizontal).first()),
-  //         &QValueAxis::rangeChanged, this, &MainWindow::zoom_slot);
 }
 
 void MainWindow::draw_system_chart(double a, double b) {
-  const double step = 0.1;
-  QLineSeries *series1 = new QLineSeries();
-  QLineSeries *series2 = new QLineSeries();
+  auto series1 = new QLineSeries();
+  auto series2 = new QLineSeries();
   series2->setColor(Qt::red);
 
   EquationSystem system =
       (ui->syst1_rb->isChecked() ? first_system() : second_system());
 
   // Добавление точек на график для первого уравнения
-  for (float x = -10.0; x <= 10.0; x += 0.1) {
-    float y = system.first(
+  for (double x = -10.0; x <= 10.0; x += 0.1) {
+    double y = system.first(
         x, x); // Используйте одинаковые x и y для первого уравнения
     series1->append(x, y);
   }
 
   // Добавление точек на график для второго уравнения
-  for (float x = -10.0; x <= 10.0; x += 0.1) {
-    float y = system.second(
+  for (double x = -10.0; x <= 10.0; x += 0.1) {
+    double y = system.second(
         x, x); // Используйте одинаковые x и y для второго уравнения
     series2->append(x, y);
   }
 
-  QChart *chart = new QChart();
+  auto chart = new QChart();
   chart->addSeries(series1);
   chart->addSeries(series2);
   chart->setTitle("Graph of Equation System");
@@ -153,7 +134,9 @@ void MainWindow::redraw_chart(int index) {
   }
 }
 void MainWindow::solve_btn_clicked() {
-  double a, b, tolerance;
+  double a;
+  double b;
+  double tolerance;
   a = ui->left_border_spinbox->value();
   b = ui->right_border_spinbox->value();
   tolerance = ui->inacc_spinbox->value();
@@ -171,35 +154,39 @@ void MainWindow::solve_btn_clicked() {
   int method_indx = ui->method_cbox->currentIndex();
 
   double (*f)(double);
-  Method *methodInstance = nullptr;
+  std::unique_ptr<Method> methodInstance;
 
   switch (func_indx) {
-  case 0: {
+  case 0:
     f = first;
-  } break;
-  case 1: {
+    break;
+  case 1:
     f = second;
-  } break;
-  case 2: {
+    break;
+  case 2:
     f = third;
-  } break;
-  case 3: {
+    break;
+  case 3:
     f = fourth;
-  } break;
+    break;
+  default:
+    return;
   }
 
   switch (method_indx) {
   case 0:
-    methodInstance = new HalfDivMehod(f, a, b, tolerance);
+    methodInstance = std::make_unique<HalfDivMethod>(f, a, b, tolerance);
     break;
   case 1:
-    methodInstance = new SecantMethod(f, a, b, tolerance);
+    methodInstance = std::make_unique<SecantMethod>(f, a, b, tolerance);
     break;
   case 2:
-    methodInstance = new SimpleIterationMethod(f, a, b, tolerance);
+    methodInstance =
+        std::make_unique<SimpleIterationMethod>(f, a, b, tolerance);
     break;
+  default:
+    return;
   }
-
   if (methodInstance != nullptr) {
     auto x = methodInstance->solve();
     auto it = methodInstance->get_it();
@@ -214,7 +201,6 @@ void MainWindow::solve_btn_clicked() {
     ui->text_output->append("<b>Root:</b> " + QString::number(x));
     ui->text_output->append("<b>F(x):</b> " + QString::number(f(x)));
     ui->text_output->append(""); // Add a line break
-    delete methodInstance;
   }
 }
 
@@ -310,12 +296,14 @@ void MainWindow::solve_sys_btn_clicked() {
     eqs = second_system();
   }
 
-  double x0, y0, eps;
+  double x0;
+  double y0;
+  double eps;
   x0 = ui->left_border_spinbox_sys->value();
   y0 = ui->right_border_spinbox_sys->value();
   eps = ui->inacc_spinbox_sys->value();
 
-  auto result = newton_solve(eqs, x0, y0, eps);
+  auto [X, Y] = newton_solve(eqs, x0, y0, eps);
 
   ui->text_output->append("<b>Time:</b> " +
                           QDateTime::currentDateTime().toString());
@@ -326,7 +314,7 @@ void MainWindow::solve_sys_btn_clicked() {
   ui->text_output->append("<b>Left border:</b> " + QString::number(x0));
   ui->text_output->append("<b>Right border:</b> " + QString::number(y0));
   ui->text_output->append("<b>Tolerance:</b> " + QString::number(eps));
-  ui->text_output->append("<b>(X, Y):</b> " + QString::number(result.first) +
-                          " " + QString::number(result.second));
+  ui->text_output->append("<b>(X, Y):</b> " + QString::number(X) + " " +
+                          QString::number(Y));
   ui->text_output->append(""); // Add a line break
 }

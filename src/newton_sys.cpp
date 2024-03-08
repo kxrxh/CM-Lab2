@@ -1,12 +1,12 @@
 #include "newton_sys.hpp"
 
-double derivative_x(double (*f)(double, double), double x, double y,
-                    double dx = 1e-6) {
+template <class Func>
+double derivative_x(Func f, double x, double y, double dx = 1e-6) {
   return (f(x + dx, y) - f(x, y)) / dx;
 }
 
-double derivative_y(double (*f)(double, double), double x, double y,
-                    double dy = 1e-6) {
+template <class Func>
+double derivative_y(Func f, double x, double y, double dy = 1e-6) {
   return (f(x, y + dy) - f(x, y)) / dy;
 }
 
@@ -21,7 +21,7 @@ std::pair<double, double> newton_solve(EquationSystem &system, double x0,
     double f2 = system.second(x, y);
 
     if (fabs(f1) < epsilon && fabs(f2) < epsilon) {
-      break;
+      return std::make_pair(x, y);
     }
 
     double J11 = derivative_x(system.first, x, y);
@@ -31,7 +31,7 @@ std::pair<double, double> newton_solve(EquationSystem &system, double x0,
 
     double detJ = J11 * J22 - J12 * J21;
     if (fabs(detJ) < epsilon) {
-      break;
+      return std::make_pair(x, y);
     }
 
     double dx = (f1 * J22 - f2 * J12) / detJ;
