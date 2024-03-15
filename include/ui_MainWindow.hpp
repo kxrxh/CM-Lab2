@@ -1,18 +1,17 @@
 /********************************************************************************
-** Form generated from reading UI file 'MainWindowTrsgby.ui'
+** Form generated from reading UI file 'MainWindowBNwdOx.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.15.12
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef MAINWINDOWTRSGBY_H
-#define MAINWINDOWTRSGBY_H
+#ifndef MAINWINDOWBNWDOX_H
+#define MAINWINDOWBNWDOX_H
 
-#include <QtCharts/QChartView>
-#include <QtCharts/chartsnamespace.h>
 #include <QtCore/QVariant>
 #include <QtGui/QIcon>
+#include <QtWebEngineWidgets/QWebEngineView>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDoubleSpinBox>
@@ -72,8 +71,8 @@ public:
   QTextBrowser *text_output;
   QPushButton *clear_output;
   QLabel *Functionlabel_9;
-  QtCharts::QChartView *chartview;
   QPushButton *save_btn;
+  QWebEngineView *webEngineView;
   QMenuBar *menubar;
   QStatusBar *statusbar;
 
@@ -86,6 +85,7 @@ public:
     icon.addFile(QString::fromUtf8(":/assets/pig.png"), QSize(), QIcon::Normal,
                  QIcon::Off);
     MainWindow->setWindowIcon(icon);
+    MainWindow->setFixedSize(1115, 1016);
     centralwidget = new QWidget(MainWindow);
     centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
     centralwidget->setMinimumSize(QSize(1115, 963));
@@ -345,13 +345,31 @@ public:
     Functionlabel_9->setFont(font2);
     Functionlabel_9->setAlignment(Qt::AlignLeading | Qt::AlignLeft |
                                   Qt::AlignVCenter);
-    chartview = new QtCharts::QChartView(centralwidget);
-    chartview->setObjectName(QString::fromUtf8("chartview"));
-    chartview->setGeometry(QRect(60, 330, 1001, 351));
     save_btn = new QPushButton(centralwidget);
     save_btn->setObjectName(QString::fromUtf8("save_btn"));
     save_btn->setGeometry(QRect(1000, 930, 101, 31));
     save_btn->setFont(font4);
+    webEngineView = new QWebEngineView(centralwidget);
+    webEngineView->setObjectName(QString::fromUtf8("webEngineView"));
+    webEngineView->setGeometry(QRect(9, 339, 1091, 331));
+    QString html = R"(
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://www.desmos.com/api/v1.8/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+</head>
+<body>
+    <div id="calculator" style="height: 311px; width: 100%;"></div>
+    <script>
+        var elt = document.getElementById('calculator');
+        var calculator = Desmos.GraphingCalculator(elt);
+    </script>
+</body>
+</html>
+)";
+    webEngineView->setHtml(html);
     MainWindow->setCentralWidget(centralwidget);
     menubar = new QMenuBar(MainWindow);
     menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -512,4 +530,4 @@ class MainWindow : public Ui_MainWindow {};
 
 QT_END_NAMESPACE
 
-#endif // MAINWINDOWTRSGBY_H
+#endif // MAINWINDOWBNWDOX_H

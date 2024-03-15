@@ -9,8 +9,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt5 REQUIRED COMPONENTS Widgets Charts Core)
-find_package(Qt5 REQUIRED COMPONENTS Widgets Charts Core)
+find_package(QT NAMES Qt5 REQUIRED COMPONENTS Widgets Charts Core WebView WebEngineWidgets)
+find_package(Qt5 REQUIRED COMPONENTS Widgets Charts Core WebView WebEngineWidgets)
 
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(SOURCE_HEADER_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -30,7 +30,7 @@ else()
 endif()
 
 include_directories(include)
-target_link_libraries(lab2_cpp PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Charts Qt${QT_VERSION_MAJOR}::Core)
+target_link_libraries(lab2_cpp PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Charts Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::WebView Qt${QT_VERSION_MAJOR}::WebEngineWidgets)
 
 
 

@@ -35,8 +35,8 @@ private:
 
   bool validate_script(const Script &script) const;
 
-  void draw_chart_ab(double a, double b);
-  void draw_system_chart(double a, double b);
+  void draw_chart_ab();
+  void draw_system_chart();
 
 private slots:
   void clear_btn_clicked();
@@ -47,7 +47,7 @@ private slots:
 
   void browse_btn_clicked();
 
-  void redraw_chart(int index);
+  void change_tab(int index);
 
   void update_chart();
 

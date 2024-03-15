@@ -6,21 +6,18 @@
 #include "secant_method.hpp"
 #include "simple_iteration_method.hpp"
 #include "systems.hpp"
+#include <QtWebEngineWidgets>
 #include <memory>
+#include <qdebug.h>
 #include <qlineseries.h>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
   ui->setupUi(this);
 
-  // Create a chart view
-  ui->chartview->setRenderHint(QPainter::Antialiasing);
-  ui->chartview->setRubberBand(QChartView::HorizontalRubberBand);
-  ui->chartview->setToolTip("Right click to zoom in, left click to zoom out");
-
   ui->text_output->acceptRichText();
 
-  redraw_chart(0);
-
+  connect(ui->webEngineView, &QWebEngineView::loadFinished, this,
+          &MainWindow::update_chart);
   connect(ui->clear_output, &QPushButton::clicked, this,
           &MainWindow::clear_btn_clicked);
   connect(ui->search_button, &QPushButton::clicked, this,
@@ -38,7 +35,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
   connect(ui->solve_button_3, &QPushButton::clicked, this,
           &MainWindow::solve_sys_btn_clicked);
   connect(ui->tabWidget, SIGNAL(currentChanged(int)), this,
-          SLOT(redraw_chart(int)));
+          SLOT(change_tab(int)));
+  connect(ui->syst1_rb, &QRadioButton::clicked, this,
+          &MainWindow::update_chart);
+  connect(ui->syst2_rb, &QRadioButton::clicked, this,
+          &MainWindow::update_chart);
 }
 
 void MainWindow::clear_btn_clicked() { ui->text_output->clear(); }
@@ -54,85 +55,71 @@ void MainWindow::browse_btn_clicked() {
   ui->textEdit->setText(filename);
 }
 
-void MainWindow::draw_chart_ab(double a, double b) {
-  const double step = 0.1;
-  auto series = new QLineSeries();
+void MainWindow::change_tab(int _index) { update_chart(); }
+
+void MainWindow::draw_chart_ab() {
+  QString latex_function;
   switch (ui->func_cbox->currentIndex()) {
-  case 0: {
-    for (double x = a; x <= b; x += step) {
-      series->append(x, first(x));
-    }
-  } break;
-  case 1: {
-    for (double x = a; x <= b; x += step) {
-      series->append(x, second(x));
-    }
-  } break;
-  case 2: {
-    for (double x = -40; x <= 60; x += step) {
-      if (double fx = third(x); fx == INFINITY)
-        continue;
-      series->append(x, third(x));
-    }
-  } break;
-  case 3: {
-    for (double x = a; x <= b; x += step) {
-      series->append(x, fourth(x));
-    }
-  } break;
+  case 0:
+    latex_function = "y=14.23x^{3}+8.1x^{2}-1.01x+0.64";
+    break;
+  case 1:
+    latex_function = "y = x^3 + x^2 + 9.2";
+    break;
+  case 2:
+    latex_function = R"(y = \\exp(0.24x) - 2)";
+    break;
+  case 3:
+    latex_function = R"(y = 2*\\sin(x) + \\pi/2)";
+    break;
   default:
-    delete series;
     return;
   }
-  auto chart = new QChart();
-  chart->addSeries(series);
-  chart->createDefaultAxes();
-  chart->legend()->hide();
-  chart->setTitle(ui->func_cbox->currentText());
-  ui->chartview->setChart(chart);
+
+  QString js_expr = QString("calculator.setExpression({ id: 'graph', latex: "
+                            "'%1' })")
+                        .arg(latex_function);
+  ui->webEngineView->page()->runJavaScript(js_expr);
+  ui->webEngineView->page()->runJavaScript(
+      "calculator.removeExpression({id: 'subgraph'})");
 }
 
-void MainWindow::draw_system_chart(double a, double b) {
-  auto series1 = new QLineSeries();
-  auto series2 = new QLineSeries();
-  series2->setColor(Qt::red);
-
-  EquationSystem system =
-      (ui->syst1_rb->isChecked() ? first_system() : second_system());
-
-  // Добавление точек на график для первого уравнения
-  for (double x = -10.0; x <= 10.0; x += 0.1) {
-    double y = system.first(
-        x, x); // Используйте одинаковые x и y для первого уравнения
-    series1->append(x, y);
-  }
-
-  // Добавление точек на график для второго уравнения
-  for (double x = -10.0; x <= 10.0; x += 0.1) {
-    double y = system.second(
-        x, x); // Используйте одинаковые x и y для второго уравнения
-    series2->append(x, y);
-  }
-
-  auto chart = new QChart();
-  chart->addSeries(series1);
-  chart->addSeries(series2);
-  chart->setTitle("Graph of Equation System");
-  chart->createDefaultAxes();
-  chart->legend()->hide();
-
-  ui->chartview->setChart(chart);
-}
-
-void MainWindow::update_chart() { draw_chart_ab(-500, 500); }
-
-void MainWindow::redraw_chart(int index) {
-  if (index == 0) {
-    draw_chart_ab(-500, 500);
+void MainWindow::draw_system_chart() {
+  std::vector<QString> latex_functions(2);
+  std::vector<QString> graph_names(2);
+  if (ui->syst1_rb->isChecked()) {
+    graph_names[0] = "graph";
+    graph_names[1] = "subgraph";
+    latex_functions[0] = R"(\\tan(2x+0.2y) = x^2)";
+    latex_functions[1] = "4x^2+4y^2=1";
   } else {
-    draw_system_chart(-200, 200);
+    graph_names[0] = "graph";
+    graph_names[1] = "subgraph";
+    latex_functions[0] = R"(\\sin(x) = 3y)";
+    latex_functions[1] = "xy + 2x^2 = 16";
+  }
+
+  QString js_expr = QString("calculator.setExpression({ id: '%1', latex: "
+                            "'%2', color: Desmos.Colors.BLUE })")
+                        .arg(graph_names[0], latex_functions[0]);
+  qDebug() << js_expr;
+  ui->webEngineView->page()->runJavaScript(js_expr);
+
+  js_expr = QString("calculator.setExpression({ id: '%1', latex: '%2', color: Desmos.Colors.RED })")
+                .arg(graph_names[1], latex_functions[1]);
+
+  qDebug() << js_expr;
+  ui->webEngineView->page()->runJavaScript(js_expr);
+}
+
+void MainWindow::update_chart() {
+  if (ui->tabWidget->currentIndex() == 0) {
+    draw_chart_ab();
+  } else {
+    draw_system_chart();
   }
 }
+
 void MainWindow::solve_btn_clicked() {
   double a;
   double b;
