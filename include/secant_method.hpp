@@ -10,7 +10,7 @@ private:
   double x1;
 
 public:
-  SecantMethod(double (*f)(double), double a, double b, double tol);
+  SecantMethod(std::function<double(double)> const& f, double a, double b, double tol);
   double solve() override;
 };
 

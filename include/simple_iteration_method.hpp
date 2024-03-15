@@ -4,9 +4,10 @@
 #include "method.hpp"
 #include <cmath>
 
-class SimpleIterationMethod : public Method {
+class SimpleIterationMethod final : public Method {
 public:
-  SimpleIterationMethod(double (*f)(double), double a, double b, double tol)
+  SimpleIterationMethod(std::function<double(double)> const &f, double a,
+                        double b, double tol)
       : Method(f, a, b, tol){};
 
   double solve() override;

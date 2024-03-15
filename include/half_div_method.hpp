@@ -4,7 +4,7 @@
 #include "method.hpp"
 #include <cmath>
 
-class HalfDivMethod : public Method {
+class HalfDivMethod final : public Method {
 public:
   HalfDivMethod(std::function<double(double)> const &f, double a, double b,
                 double tol)
