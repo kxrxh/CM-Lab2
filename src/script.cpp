@@ -42,22 +42,12 @@ Script::Script(const QString &filename) {
   file.close();
 }
 
-double Script::get_tol() const {
-  return this->tol;
-}
+double Script::get_tol() const { return this->tol; }
 
-double Script::get_left_border() const {
-  return this->left_border;
-}
+double Script::get_left_border() const { return this->left_border; }
 
-double Script::get_right_border() const {
-  return this->right_border;
-}
+double Script::get_right_border() const { return this->right_border; }
 
-int Script::get_method_indx() const {
-  return this->method_indx;
-}
+int Script::get_method_indx() const { return this->method_indx; }
 
-int Script::get_function_indx() const {
-  return this->function_indx;
-}
+int Script::get_function_indx() const { return this->function_indx; }

@@ -18,8 +18,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
   connect(ui->webEngineView, &QWebEngineView::loadFinished, this,
           &MainWindow::update_chart);
-  connect(ui->clear_output, &QPushButton::clicked, this,
-          &MainWindow::clear_btn_clicked);
+  connect(ui->clear_output, &QPushButton::clicked, ui->text_output,
+          &QTextEdit::clear);
   connect(ui->search_button, &QPushButton::clicked, this,
           &MainWindow::browse_btn_clicked);
   connect(ui->func_cbox, &QComboBox::currentTextChanged, this,
@@ -41,8 +41,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
   connect(ui->syst2_rb, &QRadioButton::clicked, this,
           &MainWindow::update_chart);
 }
-
-void MainWindow::clear_btn_clicked() { ui->text_output->clear(); }
 
 void MainWindow::browse_btn_clicked() {
   QString filename = QFileDialog::getOpenFileName(
@@ -105,7 +103,8 @@ void MainWindow::draw_system_chart() {
   qDebug() << js_expr;
   ui->webEngineView->page()->runJavaScript(js_expr);
 
-  js_expr = QString("calculator.setExpression({ id: '%1', latex: '%2', color: Desmos.Colors.RED })")
+  js_expr = QString("calculator.setExpression({ id: '%1', latex: '%2', color: "
+                    "Desmos.Colors.RED })")
                 .arg(graph_names[1], latex_functions[1]);
 
   qDebug() << js_expr;

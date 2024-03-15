@@ -22,16 +22,15 @@ class MainWindow;
 }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow {
+class MainWindow final : public QMainWindow {
   Q_OBJECT
 
 public:
-  MainWindow(QWidget *parent = nullptr);
-  ~MainWindow() = default;
+  explicit MainWindow(QWidget *parent = nullptr);
+  ~MainWindow() final = default;
 
 private:
   std::unique_ptr<Ui::MainWindow> ui = std::make_unique<Ui::MainWindow>();
-  // void zoom_slot();
 
   bool validate_script(const Script &script) const;
 
@@ -39,8 +38,6 @@ private:
   void draw_system_chart();
 
 private slots:
-  void clear_btn_clicked();
-
   void solve_btn_clicked();
 
   void solve_sys_btn_clicked();
