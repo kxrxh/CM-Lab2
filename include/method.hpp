@@ -1,5 +1,6 @@
 #ifndef METHOD_HPP
 #define METHOD_HPP
+#include <functional>
 
 /**
  * @brief Base class for numerical methods to find roots of a function within an
@@ -7,13 +8,13 @@
  */
 class Method {
 protected:
-  double (*function)(
-      double); ///< Pointer to the function for which the root is to be found.
-  double a;    ///< Left endpoint of the interval.
-  double b;    ///< Right endpoint of the interval.
+  std::function<double(double)>
+      function; ///< Pointer to the function for which the root is to be found.
+  double a;     ///< Left endpoint of the interval.
+  double b;     ///< Right endpoint of the interval.
   double tolerance;    ///< Tolerance for convergence.
   unsigned int max_it; ///< Maximum number of iterations allowed.
-  unsigned int it;     ///< Current iteration count.
+  unsigned int it = 0; ///< Current iteration count.
 
 public:
   /**
@@ -25,9 +26,9 @@ public:
    * @param tolerance Tolerance for convergence.
    * @param max_it Maximum number of iterations allowed. Default value is 1000.
    */
-  explicit Method(double (*f)(double), double a, double b, double tolerance,
-                  unsigned int max_it = 10000)
-      : function(f), a(a), b(b), tolerance(tolerance), max_it(max_it), it(0) {}
+  explicit Method(std::function<double(double)> const &f, double a, double b,
+                  double tolerance, unsigned int max_it = 10000)
+      : function(f), a(a), b(b), tolerance(tolerance), max_it(max_it) {}
 
   /**
    * @brief Virtual destructor for the Method class.

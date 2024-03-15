@@ -6,7 +6,8 @@
 
 class HalfDivMethod : public Method {
 public:
-  HalfDivMethod(double (*f)(double), double a, double b, double tol)
+  HalfDivMethod(std::function<double(double)> const &f, double a, double b,
+                double tol)
       : Method(f, a, b, tol) {}
   double solve() override;
 };
