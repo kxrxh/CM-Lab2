@@ -466,17 +466,14 @@ public:
         "font-size:12pt; font-weight:400; font-style:normal;\">\n"
         "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
         "margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span "
-        "style=\" font-size:14pt; font-style:italic;\">tg(2x + 0.2y) = "
-        "x</span><span style=\" font-size:14pt; font-style:italic; "
-        "vertical-align:super;\">2</span></p>\n"
+        "style=\" font-size:14pt; font-style:italic;\">sin(2x) = y + 3"
+        "</span></p>\n"
         "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
         "margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span "
         "style=\" font-size:14pt; font-style:italic;\">4x</span><span style=\" "
         "font-size:14pt; font-style:italic; "
         "vertical-align:super;\">2</span><span style=\" font-size:14pt; "
         "font-style:italic;\"> + 4y</span><span style=\" font-size:14pt; "
-        "font-style:italic; vertical-align:super;\""
-        ">2</span><span style=\" font-size:14pt; "
         "font-style:italic;\">=1</span></p></body></html>",
         nullptr));
     text_eq2->setHtml(QCoreApplication::translate(

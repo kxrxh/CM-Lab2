@@ -88,8 +88,8 @@ void MainWindow::draw_system_chart() {
   if (ui->syst1_rb->isChecked()) {
     graph_names[0] = "graph";
     graph_names[1] = "subgraph";
-    latex_functions[0] = R"(\\tan(2x+0.2y) = x^2)";
-    latex_functions[1] = "4x^2+4y^2=1";
+    latex_functions[0] = R"(\\sin(2x) = y + 3)";
+    latex_functions[1] = "4x^2+4y=1";
   } else {
     graph_names[0] = "graph";
     graph_names[1] = "subgraph";
