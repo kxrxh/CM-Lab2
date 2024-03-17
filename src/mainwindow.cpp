@@ -174,7 +174,7 @@ void MainWindow::solve_btn_clicked() {
     return;
   }
   if (methodInstance != nullptr) {
-    auto x = methodInstance->solve();
+    auto result = methodInstance->solve();
     auto it = methodInstance->get_it();
     ui->text_output->append("<b>Time:</b> " +
                             QDateTime::currentDateTime().toString());
@@ -184,8 +184,11 @@ void MainWindow::solve_btn_clicked() {
     ui->text_output->append("<b>Right border:</b> " + QString::number(b));
     ui->text_output->append("<b>Tolerance:</b> " + QString::number(tolerance));
     ui->text_output->append("<b>Iterations:</b> " + QString::number(it));
-    ui->text_output->append("<b>Root:</b> " + QString::number(x));
-    ui->text_output->append("<b>F(x):</b> " + QString::number(f(x)));
+    ui->text_output->append("<b>Root:</b> " + QString::number(result.value));
+    ui->text_output->append("<b>F(x):</b> " + QString::number(f(result.value)));
+    if (result.message.length() > 0) {
+      ui->text_output->append("<b>Message:</b> " + result.message);
+    }
     ui->text_output->append(""); // Add a line break
   }
 }

@@ -1,10 +1,11 @@
 #include "simple_iteration_method.hpp"
 #include "utils.hpp"
 
-double SimpleIterationMethod::solve() {
+CalculationResult SimpleIterationMethod::solve() {
 
   if (function(a) * function(b) >= 0) {
-    return NAN;
+    return {.success = false,
+            .message = "Function has same sign at both endpoints."};
   }
 
   double x0 = (a + b) / 2;
@@ -16,5 +17,5 @@ double SimpleIterationMethod::solve() {
     it++;
   }
 
-  return x1;
+  return {.success = true, .value = x1};
 }

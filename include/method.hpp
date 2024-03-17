@@ -1,7 +1,13 @@
 #ifndef METHOD_HPP
 #define METHOD_HPP
+#include <cmath>
 #include <functional>
-
+#include <QString>
+struct CalculationResult {
+  bool success = false;
+  QString message;
+  double value = NAN;
+};
 /**
  * @brief Base class for numerical methods to find roots of a function within an
  * interval.
@@ -41,7 +47,7 @@ public:
    *
    * @return Approximate value of the root found by the numerical method.
    */
-  virtual double solve() = 0;
+  virtual CalculationResult solve() = 0;
 
   unsigned int get_it() const { return it; }
 };

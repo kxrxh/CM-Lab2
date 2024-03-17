@@ -1,15 +1,18 @@
 #include "half_div_method.hpp"
 
-double HalfDivMethod::solve() {
+CalculationResult HalfDivMethod::solve() {
   if (function(a) * function(b) > 0) {
-    return NAN;
+    return {
+        .success = false,
+        .message = "Function has same sign at both endpoints.",
+        .value = NAN,
+    };
   }
 
-  double x;
-  double fx;
   for (int i = 0; i < max_it; ++i) {
-    x = (a + b) / 2;
-    fx = function(x);
+    this->it++;
+    double x = (a + b) / 2;
+    double fx = function(x);
 
     if (function(a) * fx > 0) {
       a = x;
@@ -17,13 +20,11 @@ double HalfDivMethod::solve() {
       b = x;
     }
 
-    it++;
-
     if (fabs(a - b) <= tolerance || fabs(fx) < tolerance) {
       x = (a + b) / 2;
-      return x;
+      return {.success = true, .value = x};
     }
   }
 
-  return NAN;
+  return {.success = false, .message = "Failed to converge.", .value = NAN};
 }
